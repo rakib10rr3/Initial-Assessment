@@ -19,23 +19,36 @@
         android:textSize="@dimen/lbl_new_note_title"
         android:textStyle="normal" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Student Name"
+        android:textColor="#333" />
 
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
         android:gravity="top"
         android:hint="@string/student_name"
-        android:textColorHint="@color/hint_enter_note"
+        android:textColor="#333"
+        android:textColorHint="#999"
         android:textSize="@dimen/input_new_note" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date of Birth (DD/MM/YYYY)"
+        android:textColor="#333" />
 
     <EditText
         android:id="@+id/dob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Date of birth" />
+        android:hint="DD/MM/YYYY"
+        android:text="DD/MM/YYYY"
+        android:textColor="#333"
+        android:textColorHint="#999" />
 
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -48,14 +61,16 @@
             android:id="@+id/radio_male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/male"
-            android:checked="true" />
+            android:textColor="#333" />
 
         <RadioButton
             android:id="@+id/radio_female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/female" />
+            android:text="@string/female"
+            android:textColor="#333" />
     </RadioGroup>
 
 </LinearLayout>
