@@ -13,4 +13,5 @@
     <string name="lbl_new_student_title">Add a student</string>
     <string name="lbl_edit_student_title">Edit student</string>
     <string name="msg_no_student">No Student</string>
+    <string name="title_activity_category">CategoryActivity</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.rakib.initialassessment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 import com.rakib.initialassessment.data.InitialAssessmentDbHelper;
 import com.rakib.initialassessment.model.Student;
 import com.rakib.initialassessment.util.MyDividerItemDecoration;
+import com.rakib.initialassessment.util.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity
     String name;
     String dob;
     String gender;
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,22 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setAdapter(mStudentAdapter);
 
         toggleEmptyNotes();
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
+                recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, final int position) {
+                //Toast.makeText(MainActivity.this, studentList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(),CategoryActivity.class);
+                intent.putExtra("name",studentList.get(position).getName());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                //showActionsDialog(position);
+            }
+        }));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
