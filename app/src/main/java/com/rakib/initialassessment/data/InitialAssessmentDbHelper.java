@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.rakib.initialassessment.data.InitialAssessmentContract.StudentEntry;
+import com.rakib.initialassessment.data.InitialAssessmentContract.QuestionEntry;
+import com.rakib.initialassessment.model.Question;
 import com.rakib.initialassessment.model.Student;
 
 import java.util.ArrayList;
@@ -31,12 +33,23 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
                         StudentEntry.COLUMN_DOB + " TEXT NOT NULL," +
                         StudentEntry.COLUMN_GENDER + " TEXT NOT NULL)";
 
+        String CREATE_QUESTION_TABLE = "CREATE TABLE " + QuestionEntry.TABLE_NAME + " (" +
+                QuestionEntry._ID + " INTEGER PRIMARY KEY," +
+                QuestionEntry.COLUMN_QUESTION_NAME + " TEXT," +
+                QuestionEntry.COLUMN_OPTION_A+ " TEXT ," +
+                QuestionEntry.COLUMN_OPTION_B+ " TEXT ," +
+                QuestionEntry.COLUMN_OPTION_C+ " TEXT ," +
+                QuestionEntry.COLUMN_ANSWER+ " TEXT ," +
+                QuestionEntry.COLUMN_CATEGORY + " TEXT)";
+
         db.execSQL(CREATE_STUDENT_TABLE);
+        db.execSQL(CREATE_QUESTION_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + StudentEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + QuestionEntry.TABLE_NAME);
 
         // Create tables again
         onCreate(db);
@@ -146,4 +159,9 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 //                new String[]{String.valueOf(note.getId())});
 //        db.close();
 //    }
+
+    private void addQuestions()
+    {
+
+    }
 }

@@ -18,4 +18,16 @@ public class InitialAssessmentContract {
 
     }
 
+    public static class QuestionEntry implements BaseColumns{
+        public static final String TABLE_NAME = "question";
+        public static final String COLUMN_QUESTION_NAME = "ques";
+        public static final String COLUMN_OPTION_A = "opta";
+        public static final String COLUMN_OPTION_B = "optb";
+        public static final String COLUMN_OPTION_C = "optc";
+        public static final String COLUMN_ANSWER = "ans";
+        public static final String COLUMN_CATEGORY = "cat";
+
+
+    }
+
 }
