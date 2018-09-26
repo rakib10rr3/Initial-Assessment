@@ -309,6 +309,8 @@ public class MainActivity extends AppCompatActivity
 //                    Log.d("aaa", dob);
 
                     db.insertStudent(new Student(-1,name,dob,gender));
+                    studentList.clear();
+                    studentList.addAll(db.getAllStudents());
                     mStudentAdapter.notifyDataSetChanged();
                     toggleEmptyStudents();
                 }
