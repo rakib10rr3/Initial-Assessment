@@ -2,12 +2,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".CategoryActivity"
     tools:showIn="@layout/activity_category">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,9 +23,10 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_vocal_imitation"
-                android:layout_width="160dp"
+                android:layout_width="0dp"
                 android:layout_height="190dp"
                 android:layout_margin="@dimen/dimen_10"
+                android:layout_weight="1"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground">
 
@@ -60,17 +60,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="5dp"
-                        android:text="the 5th step"
-                        android:textColor="@android:color/darker_gray" />
+                        android:text="3 OUT OF 5"
+                        android:textColor="@android:color/holo_green_light"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_matching"
-                android:layout_width="160dp"
+                android:layout_width="0dp"
                 android:layout_height="190dp"
                 android:layout_margin="@dimen/dimen_10"
+                android:layout_weight="1"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground">
 
@@ -104,9 +105,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="5dp"
-                        android:text="the 5th step"
-                        android:textColor="@android:color/darker_gray" />
+                        android:text="NOT ASSESSED"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -122,9 +123,10 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_labeling"
-                android:layout_width="160dp"
+                android:layout_width="0dp"
                 android:layout_height="190dp"
                 android:layout_margin="@dimen/dimen_10"
+                android:layout_weight="1"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground">
 
@@ -158,17 +160,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="5dp"
-                        android:text="the 5th step"
-                        android:textColor="@android:color/darker_gray" />
+                        android:text="NOT ASSESSED"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_receptive_by_ffc"
-                android:layout_width="160dp"
+                android:layout_width="0dp"
                 android:layout_height="190dp"
                 android:layout_margin="@dimen/dimen_10"
+                android:layout_weight="1"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground">
 
@@ -202,9 +205,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="5dp"
-                        android:text="the 5th step"
-                        android:textColor="@android:color/darker_gray" />
+                        android:text="NOT ASSESSED"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -220,9 +223,10 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_conversational_skill"
-                android:layout_width="160dp"
+                android:layout_width="0dp"
                 android:layout_height="190dp"
                 android:layout_margin="@dimen/dimen_10"
+                android:layout_weight="1"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground">
 
@@ -256,17 +260,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="5dp"
-                        android:text="the 5th step"
-                        android:textColor="@android:color/darker_gray" />
+                        android:text="NOT ASSESSED"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_letter_number"
-                android:layout_width="160dp"
+                android:layout_width="0dp"
                 android:layout_height="190dp"
                 android:layout_margin="@dimen/dimen_10"
+                android:layout_weight="1"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground">
 
@@ -300,9 +305,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="5dp"
-                        android:text="the 5th step"
-                        android:textColor="@android:color/darker_gray" />
+                        android:text="NOT ASSESSED"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

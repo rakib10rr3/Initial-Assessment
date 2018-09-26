@@ -2,6 +2,7 @@ package com.rakib.initialassessment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rakib.initialassessment.data.InitialAssessmentDbHelper;
 import com.rakib.initialassessment.model.Question;
@@ -23,8 +25,8 @@ public class QuizActivity extends AppCompatActivity {
     int qid = 0;
     Question currentQ;
     TextView questionTextView;
-    RadioButton optARadioButton,optBRadioButton,optCRadioButton;
-    Button nextButton;
+    RadioButton optARadioButton, optBRadioButton, optCRadioButton;
+    FloatingActionButton nextButton;
 
     Intent intent;
 
@@ -35,6 +37,10 @@ public class QuizActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /**
+         * TODO: appbar title should be the assessment name
+         */
+
         InitialAssessmentDbHelper dbHelper = new InitialAssessmentDbHelper(this);
         questionList = dbHelper.getAllQuestions();
         currentQ = questionList.get(qid);
@@ -43,7 +49,7 @@ public class QuizActivity extends AppCompatActivity {
         optARadioButton = findViewById(R.id.radio_opt1);
         optBRadioButton = findViewById(R.id.radio_opt2);
         optCRadioButton = findViewById(R.id.radio_opt3);
-        nextButton = findViewById(R.id.butto_next);
+        nextButton = findViewById(R.id.fabNext);
 
         setQuestionView();
 
@@ -51,24 +57,29 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 RadioGroup radioGroup = findViewById(R.id.radio_group_ques);
-                RadioButton answer = findViewById(radioGroup.getCheckedRadioButtonId());
-                radioGroup.clearCheck();
-                if (currentQ.getCorrect().equals(answer.getText()))
-                {
-                    score++;
-                    Log.d("Score",String.valueOf(score));
-                }
-                if (qid<5)
-                {
-                    currentQ = questionList.get(qid);
-                    setQuestionView();
+
+                if (radioGroup.getCheckedRadioButtonId() != -1) {
+                    RadioButton answer = findViewById(radioGroup.getCheckedRadioButtonId());
+
+                    radioGroup.clearCheck();
+                    if (currentQ.getCorrect().equals(answer.getText())) {
+                        score++;
+                        Log.d("Score", String.valueOf(score));
+                    }
+                    if (qid < 5) {
+                        currentQ = questionList.get(qid);
+                        setQuestionView();
+                    } else {
+                        intent = new Intent(getApplicationContext(), CatagoryResultActivity.class);
+                        intent.putExtra("category", currentQ.getCategory());
+                        intent.putExtra("score", score);
+                        startActivity(intent);
+                        finish();
+                    }
                 } else {
-                    intent = new Intent(getApplicationContext(),CatagoryResultActivity.class);
-                    intent.putExtra("category",currentQ.getCategory());
-                    intent.putExtra("score", score);
-                    startActivity(intent);
-                    finish();
+                    Toast.makeText(getApplicationContext(), "Make a choice first!", Toast.LENGTH_LONG).show();
                 }
+
             }
         });
     }
