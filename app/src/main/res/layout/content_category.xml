@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
@@ -92,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Matching to sample"
+                        android:text="Vocal Imitation"
                         android:textStyle="bold" />
 
                     <View
@@ -146,7 +145,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Labeling"
+                        android:text="Vocal Imitation"
                         android:textStyle="bold" />
 
                     <View
@@ -190,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Receptive by FFC"
+                        android:text="Vocal Imitation"
                         android:textStyle="bold" />
 
                     <View
@@ -244,7 +243,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Conversational Skills"
+                        android:text="Vocal Imitation"
                         android:textStyle="bold" />
 
                     <View
@@ -288,7 +287,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Letters and Numbers"
+                        android:text="Vocal Imitation"
                         android:textStyle="bold" />
 
                     <View
@@ -310,6 +309,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
+
 </ScrollView>

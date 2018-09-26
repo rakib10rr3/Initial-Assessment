@@ -18,7 +18,7 @@ public class CatagoryResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catagory_result);
 
-        categoryTextView = findViewById(R.id.txtCategoryName);
+        categoryTextView = findViewById(R.id.txtCatagoryName);
         scoreTextView = findViewById(R.id.txtChildScore);
         finishButton = findViewById(R.id.btnFinish);
 

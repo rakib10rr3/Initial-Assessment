@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,14 @@ import java.util.Locale;
 
 import java.util.Calendar;
 import java.util.Locale;
+
 import static java.util.Calendar.*;
+
 import java.util.Date;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
 
-    Date date1,date2;
+    Date date1, date2;
 
     private Context context;
     private List<Student> studentList;
@@ -52,15 +55,19 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             e.printStackTrace();
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String date = sdf.format(new Date());
-        try {
-            date2 = format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        String date = sdf.format(new Date());
+//        try {
+//            date2 = format.parse(date);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+        date2 = Calendar.getInstance().getTime();
 
-        int age = getDiffYears(date2,date1);
+//        Log.d("aaa", student.getDob());
+//        Log.d("aaa", date2.toString());
+
+        int age = getDiffYears(date1, date2);
 
         holder.mNameTextView.setText(student.getName());
         holder.mAgeTextView.setText(String.valueOf(age) + " years old");
