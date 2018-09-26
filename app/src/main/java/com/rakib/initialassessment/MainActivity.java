@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity
     private TextView noStudentTextView;
     private InitialAssessmentDbHelper db;
 
-
     String name;
     String dob;
     String gender;
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         recyclerView = findViewById(R.id.studentRecyclerView);
         noStudentTextView = findViewById(R.id.empty_student_view);
 
@@ -77,6 +75,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 showNoteDialog(false, null, -1);
+
+//                Intent testIntent = new Intent(getApplicationContext(), CatagoryResultActivity.class);
+//                startActivity(testIntent);
             }
         });
 
@@ -87,15 +88,16 @@ public class MainActivity extends AppCompatActivity
         recyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.VERTICAL, 16));
         recyclerView.setAdapter(mStudentAdapter);
 
-        toggleEmptyNotes();
+        toggleEmptyStudents();
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
                 recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, final int position) {
                 //Toast.makeText(MainActivity.this, studentList.get(position).getName(), Toast.LENGTH_SHORT).show();
-                intent = new Intent(getApplicationContext(),CategoryActivity.class);
-                intent.putExtra("name",studentList.get(position).getName());
+                intent = new Intent(getApplicationContext(), CategoryActivity.class);
+                intent.putExtra("name", studentList.get(position).getName());
+                intent.putExtra("id",studentList.get(position).getId());
                 startActivity(intent);
             }
 
@@ -251,7 +253,6 @@ public class MainActivity extends AppCompatActivity
         mDobEditText.addTextChangedListener(tw);
 
 
-
         TextView dialogTitle = view.findViewById(R.id.dialog_title);
         dialogTitle.setText(!shouldUpdate ? getString(R.string.lbl_new_student_title) : getString(R.string.lbl_edit_student_title));
 
@@ -283,17 +284,14 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(MainActivity.this, "Enter Name!", Toast.LENGTH_SHORT).show();
                     return;
 
-                }
-                else if (TextUtils.isEmpty(mDobEditText.getText().toString()) ||  mDobEditText.getText().toString().contains("D") || mDobEditText.getText().toString().contains("M") || mDobEditText.getText().toString().contains("Y"))
-                {
+                } else if (TextUtils.isEmpty(mDobEditText.getText().toString()) || mDobEditText.getText().toString().contains("D") || mDobEditText.getText().toString().contains("M") || mDobEditText.getText().toString().contains("Y")) {
                     Toast.makeText(MainActivity.this, "Enter a valid date!", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else {
+                } else {
                     final int selectedId = mRadioGroup.getCheckedRadioButtonId();
-                    final RadioButton  mRadioButton = view.findViewById(selectedId);
+                    final RadioButton mRadioButton = view.findViewById(selectedId);
                     gender = mRadioButton.getText().toString();
-                    Log.d("xxx",String.valueOf(selectedId));
+                    Log.d("xxx", String.valueOf(selectedId));
                     //Toast.makeText(MainActivity.this, mNameEditText.getText().toString() + "\n" + mDobEditText.getText().toString() + "\n" +gender, Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
 
@@ -305,30 +303,30 @@ public class MainActivity extends AppCompatActivity
                     //updateNote(inputNote.getText().toString(), position);
                 } else {
                     // create new note
-                     name = mNameEditText.getText().toString();
-                     dob = mDobEditText.getText().toString();
+                    name = mNameEditText.getText().toString();
+                    dob = mDobEditText.getText().toString();
 
+//                    Log.d("aaa", dob);
 
                     db.insertStudent(new Student(-1,name,dob,gender));
                     studentList.clear();
                     studentList.addAll(db.getAllStudents());
                     mStudentAdapter.notifyDataSetChanged();
-                    toggleEmptyNotes();
+                    toggleEmptyStudents();
                 }
             }
         });
     }
 
-    private void toggleEmptyNotes() {
+    private void toggleEmptyStudents() {
         // you can check notesList.size() > 0
 
-        if (db.getNotesCount() > 0) {
+        if (db.getStudentsCount() > 0) {
             noStudentTextView.setVisibility(View.GONE);
         } else {
             noStudentTextView.setVisibility(View.VISIBLE);
         }
     }
-
 
 
 }

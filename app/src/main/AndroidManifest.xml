@@ -28,6 +28,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rakib.initialassessment.MainActivity" />
         </activity>
+        <activity
+            android:name=".CatagoryResultActivity"
+            android:label="@string/title_activity_category_result"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rakib.initialassessment.MainActivity" />
+        </activity>
+        <activity
+            android:name=".QuizActivity"
+            android:label="@string/title_activity_quiz"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rakib.initialassessment.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

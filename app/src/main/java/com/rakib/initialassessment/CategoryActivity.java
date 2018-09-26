@@ -15,13 +15,20 @@ public class CategoryActivity extends AppCompatActivity {
     CardView mVocalImitationCardView, mMatchingCardView, mLabelingCardView, mReceptiveByFFCCardView, mConversationalSkillCardView, mLettersNumbersCardView;
     Intent intent;
 
+    String name;
+    int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("ABBLS Categories");
+
+        name = getIntent().getStringExtra("name");
+        id = getIntent().getIntExtra("id",-1);
+
+        getSupportActionBar().setTitle("ABLLS Categories " + name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initializeView();
@@ -29,7 +36,12 @@ public class CategoryActivity extends AppCompatActivity {
         mConversationalSkillCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CategoryActivity.this, "conversation", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(),QuizActivity.class);
+                intent.putExtra("name",name);
+                intent.putExtra("id",id);
+                intent.putExtra("cat","conversational");
+                //Toast.makeText(CategoryActivity.this, "conversation", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             }
         });
     }

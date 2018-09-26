@@ -7,18 +7,20 @@ public class Question {
     String optionB;
     String optionC;
     String correct;
+    String category;
 
 
     public Question() {
     }
 
-    public Question(long id, String question, String optionA, String optionB, String optionC, String correct) {
+    public Question(long id, String question, String optionA, String optionB, String optionC, String correct,String category) {
         this.id = id;
         this.question = question;
         this.optionA = optionA;
         this.optionB = optionB;
         this.optionC = optionC;
         this.correct = correct;
+        this.category = category;
     }
 
     public long getId() {
@@ -45,6 +47,10 @@ public class Question {
         return correct;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -67,5 +73,9 @@ public class Question {
 
     public void setCorrect(String correct) {
         this.correct = correct;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

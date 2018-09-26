@@ -14,4 +14,6 @@
     <string name="lbl_edit_student_title">Edit student</string>
     <string name="msg_no_student">No Student</string>
     <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_category_result">CategoryResultActivity</string>
+    <string name="title_activity_quiz">Quiz</string>
 </resources>

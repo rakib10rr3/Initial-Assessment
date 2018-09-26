@@ -16,8 +16,10 @@ import java.util.List;
 
 public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "initial_assessment.db";
+
+    private SQLiteDatabase dBase;
 
     public InitialAssessmentDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -26,6 +28,7 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        dBase = db;
         String CREATE_STUDENT_TABLE =
                 "CREATE TABLE " + StudentEntry.TABLE_NAME + " (" +
                         StudentEntry._ID + " INTEGER PRIMARY KEY," +
@@ -36,14 +39,15 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         String CREATE_QUESTION_TABLE = "CREATE TABLE " + QuestionEntry.TABLE_NAME + " (" +
                 QuestionEntry._ID + " INTEGER PRIMARY KEY," +
                 QuestionEntry.COLUMN_QUESTION_NAME + " TEXT," +
-                QuestionEntry.COLUMN_OPTION_A+ " TEXT ," +
-                QuestionEntry.COLUMN_OPTION_B+ " TEXT ," +
-                QuestionEntry.COLUMN_OPTION_C+ " TEXT ," +
-                QuestionEntry.COLUMN_ANSWER+ " TEXT ," +
+                QuestionEntry.COLUMN_OPTION_A + " TEXT ," +
+                QuestionEntry.COLUMN_OPTION_B + " TEXT ," +
+                QuestionEntry.COLUMN_OPTION_C + " TEXT ," +
+                QuestionEntry.COLUMN_ANSWER + " TEXT ," +
                 QuestionEntry.COLUMN_CATEGORY + " TEXT)";
 
         db.execSQL(CREATE_STUDENT_TABLE);
         db.execSQL(CREATE_QUESTION_TABLE);
+        addQuestions();
     }
 
     @Override
@@ -57,7 +61,7 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
     public long insertStudent(Student student) {
         // get writable database as we want to write data
-        SQLiteDatabase db = this.getWritableDatabase();
+        dBase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         // `id` and `timestamp` will be inserted automatically.
@@ -67,10 +71,10 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         values.put(StudentEntry.COLUMN_GENDER, student.getGender());
 
         // insert row
-        long id = db.insert(StudentEntry.TABLE_NAME, null, values);
+        long id = dBase.insert(StudentEntry.TABLE_NAME, null, values);
 
         // close db connection
-        db.close();
+        dBase.close();
 
         // return newly inserted row id
         return id;
@@ -106,8 +110,8 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         // Select All Query
         String selectQuery = "SELECT  * FROM " + StudentEntry.TABLE_NAME;
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        dBase = this.getWritableDatabase();
+        Cursor cursor = dBase.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
@@ -118,18 +122,18 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
                 String dob = cursor.getString(cursor.getColumnIndex(StudentEntry.COLUMN_DOB));
                 String gender = cursor.getString(cursor.getColumnIndex(StudentEntry.COLUMN_GENDER));
 
-                students.add(new Student(id,name,dob,gender));
+                students.add(new Student(id, name, dob, gender));
             } while (cursor.moveToNext());
         }
 
         // close db connection
-        db.close();
+        dBase.close();
 
         // return notes list
         return students;
     }
 
-    public int getNotesCount() {
+    public int getStudentsCount() {
         String countQuery = "SELECT  * FROM " + StudentEntry.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -160,8 +164,63 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 //        db.close();
 //    }
 
-    private void addQuestions()
-    {
+    private void addQuestions() {
+        Question q1 = new Question(-1, "_____ is my country", "USA", "Bangladesh", "India", "Bangladesh", "Conversational Skill");
+        Question q2 = new Question(-1, "_____ little star", "Twinkle twinkle", "Bangladesh", "India", "Twinkle twinkle", "Conversational Skill");
+        Question q3 = new Question(-1, "_____ sat on a wall", "Shafee", "Shohag", "Humpty dumpty", "Humpty dumpty", "Conversational Skill");
+        Question q4 = new Question(-1, "Mary had a little _____", "Cat", "Lamb", "Dog", "Lamb", "Conversational Skill");
+        Question q5 = new Question(-1, "Baa baa black sheep, have you any ____?", "wool", "toy", "car", "wool", "Conversational Skill");
 
+        this.addQuestion(q1);
+        this.addQuestion(q2);
+        this.addQuestion(q3);
+        this.addQuestion(q4);
+        this.addQuestion(q5);
+    }
+
+    public void addQuestion(Question question) {
+
+        ContentValues values = new ContentValues();
+        values.put(QuestionEntry.COLUMN_QUESTION_NAME, question.getQuestion());
+        values.put(QuestionEntry.COLUMN_OPTION_A, question.getOptionA());
+        values.put(QuestionEntry.COLUMN_OPTION_B, question.getOptionB());
+        values.put(QuestionEntry.COLUMN_OPTION_C, question.getOptionC());
+        values.put(QuestionEntry.COLUMN_ANSWER, question.getCorrect());
+        values.put(QuestionEntry.COLUMN_CATEGORY, question.getCategory());
+        dBase.insert(QuestionEntry.TABLE_NAME, null, values);
+    }
+
+    public List<Question> getAllQuestions() {
+        List<Question> questionList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + QuestionEntry.TABLE_NAME;
+        dBase = this.getReadableDatabase();
+        Cursor cursor = dBase.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Question quest = new Question();
+                quest.setId(cursor.getInt(0));
+                quest.setQuestion(cursor.getString(1));
+                quest.setOptionA(cursor.getString(2));
+                quest.setOptionB(cursor.getString(3));
+                quest.setOptionC(cursor.getString(4));
+                quest.setCorrect(cursor.getString(5));
+                quest.setCategory(cursor.getString(6));
+
+                questionList.add(quest);
+            } while (cursor.moveToNext());
+        }
+
+        return questionList;
+    }
+
+    public int questionsCount()
+    {
+        int row=0;
+        String selectQuery = "SELECT  * FROM " + QuestionEntry.TABLE_NAME;
+        dBase = this.getWritableDatabase();
+        Cursor cursor = dBase.rawQuery(selectQuery, null);
+        row=cursor.getCount();
+        return row;
     }
 }
