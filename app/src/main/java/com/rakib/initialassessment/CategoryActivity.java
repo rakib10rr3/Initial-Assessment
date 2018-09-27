@@ -39,7 +39,21 @@ public class CategoryActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(),QuizActivity.class);
                 intent.putExtra("name",name);
                 intent.putExtra("id",id);
-                intent.putExtra("cat","conversational");
+                intent.putExtra("cat","Conversational Skills");
+                intent.putExtra("has_image","no");
+                //Toast.makeText(CategoryActivity.this, "conversation", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        });
+
+        mLabelingCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(getApplicationContext(),QuizActivity.class);
+                intent.putExtra("name",name);
+                intent.putExtra("id",id);
+                intent.putExtra("cat","Labeling");
+                intent.putExtra("has_image","yes");
                 //Toast.makeText(CategoryActivity.this, "conversation", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }

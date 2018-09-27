@@ -16,7 +16,7 @@ import java.util.List;
 
 public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 8;
     private static final String DATABASE_NAME = "initial_assessment.db";
 
     private SQLiteDatabase dBase;
@@ -47,7 +47,9 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_STUDENT_TABLE);
         db.execSQL(CREATE_QUESTION_TABLE);
-        addQuestions();
+
+        addConversationalSkillsQuestions();
+        addLabelingQuestions();
     }
 
     @Override
@@ -164,13 +166,27 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 //        db.close();
 //    }
 
-    private void addQuestions() {
-        Question q1 = new Question(-1, "_____ is my country", "USA", "Bangladesh", "India", "Bangladesh", "Conversational Skill");
-        Question q2 = new Question(-1, "_____ little star", "Twinkle twinkle", "Bangladesh", "India", "Twinkle twinkle", "Conversational Skill");
-        Question q3 = new Question(-1, "_____ sat on a wall", "Shafee", "Shohag", "Humpty dumpty", "Humpty dumpty", "Conversational Skill");
-        Question q4 = new Question(-1, "Mary had a little _____", "Cat", "Lamb", "Dog", "Lamb", "Conversational Skill");
-        Question q5 = new Question(-1, "Baa baa black sheep, have you any ____?", "wool", "toy", "car", "wool", "Conversational Skill");
+    private void addConversationalSkillsQuestions() {
+        Question q1 = new Question(-1, "_____ is my country", "USA", "Bangladesh", "India", "Bangladesh", "Conversational Skills");
+        Question q2 = new Question(-1, "_____ little star", "Twinkle twinkle", "Bangladesh", "India", "Twinkle twinkle", "Conversational Skills");
+        Question q3 = new Question(-1, "_____ sat on a wall", "Shafee", "Shohag", "Humpty dumpty", "Humpty dumpty", "Conversational Skills");
+        Question q4 = new Question(-1, "Mary had a little _____", "Cat", "Lamb", "Dog", "Lamb", "Conversational Skills");
+        Question q5 = new Question(-1, "Baa baa black sheep, have you any ____?", "wool", "toy", "car", "wool", "Conversational Skills");
 
+        this.addQuestion(q1);
+        this.addQuestion(q2);
+        this.addQuestion(q3);
+        this.addQuestion(q4);
+        this.addQuestion(q5);
+    }
+
+    private void addLabelingQuestions()
+    {
+        Question q1 = new Question(-1, "ic_cow", "Cat", "Snake", "Cow", "Cow", "Labeling");
+        Question q2 = new Question(-1, "ic_dog", "Horse", "Dog", "Goat", "Dog", "Labeling");
+        Question q3 = new Question(-1, "ic_soccer", "Football", "Cricket Ball", "Egg", "Football", "Labeling");
+        Question q4 = new Question(-1, "ic_automobile", "Car", "Bus", "Truck", "Car", "Labeling");
+        Question q5 = new Question(-1, "ic_chopper", "Aeroplane", "Ship", "Helicopter", "Helicopter", "Labeling");
         this.addQuestion(q1);
         this.addQuestion(q2);
         this.addQuestion(q3);
@@ -190,11 +206,16 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         dBase.insert(QuestionEntry.TABLE_NAME, null, values);
     }
 
-    public List<Question> getAllQuestions() {
+    public List<Question> getAllQuestions(String category) {
         List<Question> questionList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + QuestionEntry.TABLE_NAME;
+       // String selectQuery = "SELECT * FROM " + QuestionEntry.TABLE_NAME + " WHERE " + QuestionEntry.COLUMN_CATEGORY + "=" + category + ";";
         dBase = this.getReadableDatabase();
-        Cursor cursor = dBase.rawQuery(selectQuery, null);
+
+        String[] columns ={QuestionEntry._ID, QuestionEntry.COLUMN_QUESTION_NAME,QuestionEntry.COLUMN_OPTION_A,QuestionEntry.COLUMN_OPTION_B,QuestionEntry.COLUMN_OPTION_C,QuestionEntry.COLUMN_ANSWER,QuestionEntry.COLUMN_CATEGORY};
+       // Cursor findEntry = db.query("sku_table", columns, "owner=?", new String[] { owner }, null, null, null);
+
+
+        Cursor cursor = dBase.query(QuestionEntry.TABLE_NAME, null, "cat=?",new String[] {category},null,null,null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -217,7 +238,7 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
     public int questionsCount()
     {
         int row=0;
-        String selectQuery = "SELECT  * FROM " + QuestionEntry.TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + QuestionEntry.TABLE_NAME ;
         dBase = this.getWritableDatabase();
         Cursor cursor = dBase.rawQuery(selectQuery, null);
         row=cursor.getCount();

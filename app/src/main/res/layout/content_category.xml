@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Vocal Imitation"
+                        android:text="Matching to Sample"
                         android:textStyle="bold" />
 
                     <View
@@ -147,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Vocal Imitation"
+                        android:text="Labeling"
                         android:textStyle="bold" />
 
                     <View
@@ -192,7 +192,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Vocal Imitation"
+                        android:text="Receptive by FFC"
                         android:textStyle="bold" />
 
                     <View
@@ -247,7 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Vocal Imitation"
+                        android:text="Conversational Skills"
                         android:textStyle="bold" />
 
                     <View
@@ -292,7 +292,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="Vocal Imitation"
+                        android:text="Letters and Numbers"
                         android:textStyle="bold" />
 
                     <View
