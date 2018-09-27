@@ -4,19 +4,26 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.rakib.initialassessment.data.InitialAssessmentContract.StudentEntry;
 import com.rakib.initialassessment.data.InitialAssessmentContract.QuestionEntry;
+import com.rakib.initialassessment.data.InitialAssessmentContract.ResultEntry;
+
 import com.rakib.initialassessment.model.Question;
+import com.rakib.initialassessment.model.Result;
 import com.rakib.initialassessment.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 11;
     private static final String DATABASE_NAME = "initial_assessment.db";
 
     private SQLiteDatabase dBase;
@@ -45,8 +52,20 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
                 QuestionEntry.COLUMN_ANSWER + " TEXT ," +
                 QuestionEntry.COLUMN_CATEGORY + " TEXT)";
 
+        String CREATE_RESULT_TABLE = "CREATE TABLE " + ResultEntry.TABLE_NAME + " (" +
+                ResultEntry._ID + " INTEGER PRIMARY KEY," +
+                ResultEntry.COLUMN_VOCAL_IMITATION + " INTEGER," +
+                ResultEntry.COLUMN_MATCHING_TO_SAMPLE + " INTEGER," +
+                ResultEntry.COLUMN_LABELING + " INTEGER," +
+                ResultEntry.COLUMN_RECEPTIVE_BY_FFC + " INTEGER," +
+                ResultEntry.COLUMN_CONVERSATIONAL_SKILLS + " INTEGER," +
+                ResultEntry.COLUMN_LETTERS_NUMBERS + " INTEGER," +
+                ResultEntry.COLUMN_STUDENT_ID + " INTEGER, " +
+                "FOREIGN KEY (" + ResultEntry.COLUMN_STUDENT_ID + ") REFERENCES " + StudentEntry.TABLE_NAME + "(" + StudentEntry._ID + ") ON UPDATE CASCADE ON DELETE CASCADE )";
+
         db.execSQL(CREATE_STUDENT_TABLE);
         db.execSQL(CREATE_QUESTION_TABLE);
+        db.execSQL(CREATE_RESULT_TABLE);
 
         addConversationalSkillsQuestions();
         addLabelingQuestions();
@@ -56,6 +75,8 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + StudentEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + QuestionEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ResultEntry.TABLE_NAME);
+
 
         // Create tables again
         onCreate(db);
@@ -231,7 +252,7 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
                 questionList.add(quest);
             } while (cursor.moveToNext());
         }
-
+        dBase.close();
         return questionList;
     }
 
@@ -243,5 +264,85 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         Cursor cursor = dBase.rawQuery(selectQuery, null);
         row=cursor.getCount();
         return row;
+    }
+
+    public long insertResult(Result result)
+    {
+        dBase = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(ResultEntry.COLUMN_VOCAL_IMITATION, result.getVocalImitation());
+        values.put(ResultEntry.COLUMN_MATCHING_TO_SAMPLE, result.getMatching());
+        values.put(ResultEntry.COLUMN_LABELING, result.getLabeling());
+        values.put(ResultEntry.COLUMN_RECEPTIVE_BY_FFC, result.getReceptiveByFFC());
+        values.put(ResultEntry.COLUMN_CONVERSATIONAL_SKILLS, result.getConversationalSkills());
+        values.put(ResultEntry.COLUMN_LETTERS_NUMBERS, result.getLettersNumbers());
+        values.put(ResultEntry.COLUMN_STUDENT_ID, result.getStudentID());
+
+
+        // insert row
+        long id = dBase.insert(ResultEntry.TABLE_NAME, null, values);
+
+        // close db connection
+        dBase.close();
+
+        // return newly inserted row id
+        return id;
+    }
+
+    public List<Result> getAllResults(long studentID)
+    {
+        List<Result> resultList = new ArrayList<>();
+
+        dBase = this.getReadableDatabase();
+
+        Cursor cursor = dBase.query(ResultEntry.TABLE_NAME, null, "student_id=?",new String[] {String.valueOf(studentID)},null,null,null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                Result result = new Result();
+                result.setId(cursor.getLong(0));
+                result.setVocalImitation(cursor.getInt(1));
+                result.setMatching(cursor.getInt(2));
+                result.setLabeling(cursor.getInt(3));
+                result.setReceptiveByFFC(cursor.getInt(4));
+                result.setConversationalSkills(cursor.getInt(5));
+                result.setLettersNumbers(cursor.getInt(6));
+                result.setStudentID(cursor.getLong(7));
+
+                resultList.add(result);
+            } while (cursor.moveToNext());
+        }
+        dBase.close();
+        return resultList;
+    }
+
+    public long updateResult(String score, int categoryNumber, long studentID)
+    {
+        long rowCount = 0;
+        dBase = this.getWritableDatabase();
+
+        Log.d("ccc",String.valueOf(score) + String.valueOf(categoryNumber) + String.valueOf(studentID));
+
+        ContentValues contentValues = new ContentValues();
+
+        if (categoryNumber == 3)
+            contentValues.put(ResultEntry.COLUMN_LABELING,Integer.parseInt(score));
+        else if (categoryNumber == 5)
+            contentValues.put(ResultEntry.COLUMN_CONVERSATIONAL_SKILLS,Integer.parseInt(score));
+        try {
+            rowCount = dBase.update(ResultEntry.TABLE_NAME, contentValues,
+                    ResultEntry.COLUMN_STUDENT_ID + " = ? ",
+                    new String[] {String.valueOf(studentID)});
+        } catch (SQLiteException e){
+//            Log.d("Exception: " + e.getMessage());
+//            Toast.makeText(, e.getMessage(), Toast.LENGTH_LONG).show();
+        } finally {
+            dBase.close();
+        }
+
+        return rowCount;
     }
 }

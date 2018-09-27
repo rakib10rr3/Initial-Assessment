@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rakib.initialassessment.data.InitialAssessmentDbHelper;
+import com.rakib.initialassessment.model.Result;
 import com.rakib.initialassessment.model.Student;
 import com.rakib.initialassessment.util.MyDividerItemDecoration;
 import com.rakib.initialassessment.util.RecyclerTouchListener;
@@ -308,7 +309,10 @@ public class MainActivity extends AppCompatActivity
 
 //                    Log.d("aaa", dob);
 
-                    db.insertStudent(new Student(-1,name,dob,gender));
+                    long id = db.insertStudent(new Student(-1,name,dob,gender));
+                    long resultId = db.insertResult(new Result(-1,-1,-1,-1,-1,-1,-1,id));
+                    Log.d("student_id",String.valueOf(id));
+                    Log.d("result_id",String.valueOf(resultId));
                     studentList.clear();
                     studentList.addAll(db.getAllStudents());
                     mStudentAdapter.notifyDataSetChanged();

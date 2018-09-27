@@ -36,6 +36,8 @@ public class QuizActivity extends AppCompatActivity {
     Intent intent;
     String hasImage;
 
+    Long id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,8 @@ public class QuizActivity extends AppCompatActivity {
         /**
          * TODO: appbar title should be the assessment name
          */
+
+        id = getIntent().getLongExtra("id",-1);
 
         InitialAssessmentDbHelper dbHelper = new InitialAssessmentDbHelper(this);
         questionList = dbHelper.getAllQuestions(getIntent().getStringExtra("cat"));
@@ -109,6 +113,7 @@ public class QuizActivity extends AppCompatActivity {
                             setQuestionView(1);
                     } else {
                         intent = new Intent(getApplicationContext(), CatagoryResultActivity.class);
+                        intent.putExtra("id",id);
                         intent.putExtra("category", currentQ.getCategory());
                         intent.putExtra("score", score);
                         startActivity(intent);
