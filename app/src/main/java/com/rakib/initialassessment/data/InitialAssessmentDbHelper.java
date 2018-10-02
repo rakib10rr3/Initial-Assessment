@@ -17,13 +17,16 @@ import com.rakib.initialassessment.model.Question;
 import com.rakib.initialassessment.model.Result;
 import com.rakib.initialassessment.model.Student;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 22;
     private static final String DATABASE_NAME = "initial_assessment.db";
 
     private SQLiteDatabase dBase;
@@ -54,12 +57,14 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
         String CREATE_RESULT_TABLE = "CREATE TABLE " + ResultEntry.TABLE_NAME + " (" +
                 ResultEntry._ID + " INTEGER PRIMARY KEY," +
+                ResultEntry.COLUMN_ASSESSMENT_DATE + " TEXT," +
                 ResultEntry.COLUMN_VOCAL_IMITATION + " INTEGER," +
                 ResultEntry.COLUMN_MATCHING_TO_SAMPLE + " INTEGER," +
                 ResultEntry.COLUMN_LABELING + " INTEGER," +
                 ResultEntry.COLUMN_RECEPTIVE_BY_FFC + " INTEGER," +
                 ResultEntry.COLUMN_CONVERSATIONAL_SKILLS + " INTEGER," +
                 ResultEntry.COLUMN_LETTERS_NUMBERS + " INTEGER," +
+                ResultEntry.COLUMN_ASSESSMENT_NO + " INTEGER, " +
                 ResultEntry.COLUMN_STUDENT_ID + " INTEGER, " +
                 "FOREIGN KEY (" + ResultEntry.COLUMN_STUDENT_ID + ") REFERENCES " + StudentEntry.TABLE_NAME + "(" + StudentEntry._ID + ") ON UPDATE CASCADE ON DELETE CASCADE )";
 
@@ -69,6 +74,9 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
         addConversationalSkillsQuestions();
         addLabelingQuestions();
+        addMatchingQuestions();
+        addLettersNumbersQuestion();
+        addReceptiveByFFCQuestions();
     }
 
     @Override
@@ -201,8 +209,7 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         this.addQuestion(q5);
     }
 
-    private void addLabelingQuestions()
-    {
+    private void addLabelingQuestions() {
         Question q1 = new Question(-1, "ic_cow", "Cat", "Snake", "Cow", "Cow", "Labeling");
         Question q2 = new Question(-1, "ic_dog", "Horse", "Dog", "Goat", "Dog", "Labeling");
         Question q3 = new Question(-1, "ic_soccer", "Football", "Cricket Ball", "Egg", "Football", "Labeling");
@@ -214,6 +221,54 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         this.addQuestion(q4);
         this.addQuestion(q5);
     }
+
+    private void addMatchingQuestions() {
+        Question q1 = new Question(-1, "ic_suv", "ic_cow", "ic_suv", "ic_automobile", "ic_suv", "Matching");
+        Question q2 = new Question(-1, "ic_house", "ic_chopper", "ic_dog", "ic_house", "ic_house", "Matching");
+        Question q3 = new Question(-1, "ic_ice_cream", "ic_robot", "ic_ice_cream", "ic_soccer", "ic_ice_cream", "Matching");
+        Question q4 = new Question(-1, "ic_railroad", "ic_railroad", "ic_chopper", "ic_ice_cream", "ic_railroad", "Matching");
+        Question q5 = new Question(-1, "ic_robot", "ic_house", "ic_robot", "ic_automobile", "ic_robot", "Matching");
+
+        this.addQuestion(q1);
+        this.addQuestion(q2);
+        this.addQuestion(q3);
+        this.addQuestion(q4);
+        this.addQuestion(q5);
+
+    }
+
+    private void addLettersNumbersQuestion()
+    {
+        Question q1 = new Question(-1, "ic_nine", "One", "Nine", "Four", "Nine", "Letters and Numbers");
+        Question q2 = new Question(-1, "ic_one", "One", "Three", "Eight", "One", "Letters and Numbers");
+        Question q3 = new Question(-1, "ic_three", "Two", "Five", "Three", "Three", "Letters and Numbers");
+        Question q4 = new Question(-1, "ic_five", "Nine", "Five", "Ten", "Five", "Letters and Numbers");
+        Question q5 = new Question(-1, "ic_seven", "Six", "Four", "Seven", "Seven", "Letters and Numbers");
+
+        this.addQuestion(q1);
+        this.addQuestion(q2);
+        this.addQuestion(q3);
+        this.addQuestion(q4);
+        this.addQuestion(q5);
+
+    }
+
+    private void addReceptiveByFFCQuestions()
+    {
+        Question q1 = new Question(-1, "It is what we drink when we become thirsty. We wash everything by it. We take bath with it. What is it?", "Mango", "Water", "Car", "Water", "Receptive by FFC");
+        Question q2 = new Question(-1, "It has four wheels. It runs on the road. By this, we can go from one place to another. What is it?", "Building", "River", "Vehicle", "Vehicle", "Receptive by FFC");
+        Question q3 = new Question(-1, "Students go here for study. The teacher teaches the students here. What is the place?", "Park", "School", "Office", "school", "Receptive by FFC");
+        Question q4 = new Question(-1, "It is a place where we lie down to sleep or rest. We all have it in our room. What is it? ", "Bed", "Pizza", "Road", "Bed", "Receptive by FFC");
+        Question q5 = new Question(-1, "It is a place for praying. Muslim people go here for praying their daily prayer. It a place for worship to Allah for Muslims. What is it? ", "School", "Mosque", "Stadium", "Mosque", "Receptive by FFC");
+
+        this.addQuestion(q1);
+        this.addQuestion(q2);
+        this.addQuestion(q3);
+        this.addQuestion(q4);
+        this.addQuestion(q5);
+
+    }
+
 
     public void addQuestion(Question question) {
 
@@ -229,14 +284,14 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
     public List<Question> getAllQuestions(String category) {
         List<Question> questionList = new ArrayList<>();
-       // String selectQuery = "SELECT * FROM " + QuestionEntry.TABLE_NAME + " WHERE " + QuestionEntry.COLUMN_CATEGORY + "=" + category + ";";
+        // String selectQuery = "SELECT * FROM " + QuestionEntry.TABLE_NAME + " WHERE " + QuestionEntry.COLUMN_CATEGORY + "=" + category + ";";
         dBase = this.getReadableDatabase();
 
-        String[] columns ={QuestionEntry._ID, QuestionEntry.COLUMN_QUESTION_NAME,QuestionEntry.COLUMN_OPTION_A,QuestionEntry.COLUMN_OPTION_B,QuestionEntry.COLUMN_OPTION_C,QuestionEntry.COLUMN_ANSWER,QuestionEntry.COLUMN_CATEGORY};
-       // Cursor findEntry = db.query("sku_table", columns, "owner=?", new String[] { owner }, null, null, null);
+        String[] columns = {QuestionEntry._ID, QuestionEntry.COLUMN_QUESTION_NAME, QuestionEntry.COLUMN_OPTION_A, QuestionEntry.COLUMN_OPTION_B, QuestionEntry.COLUMN_OPTION_C, QuestionEntry.COLUMN_ANSWER, QuestionEntry.COLUMN_CATEGORY};
+        // Cursor findEntry = db.query("sku_table", columns, "owner=?", new String[] { owner }, null, null, null);
 
 
-        Cursor cursor = dBase.query(QuestionEntry.TABLE_NAME, null, "cat=?",new String[] {category},null,null,null);
+        Cursor cursor = dBase.query(QuestionEntry.TABLE_NAME, null, "cat=?", new String[]{category}, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -256,18 +311,16 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         return questionList;
     }
 
-    public int questionsCount()
-    {
-        int row=0;
-        String selectQuery = "SELECT  * FROM " + QuestionEntry.TABLE_NAME ;
+    public int questionsCount() {
+        int row = 0;
+        String selectQuery = "SELECT  * FROM " + QuestionEntry.TABLE_NAME;
         dBase = this.getWritableDatabase();
         Cursor cursor = dBase.rawQuery(selectQuery, null);
-        row=cursor.getCount();
+        row = cursor.getCount();
         return row;
     }
 
-    public long insertResult(Result result)
-    {
+    public long insertResult(Result result) {
         dBase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -279,6 +332,7 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         values.put(ResultEntry.COLUMN_CONVERSATIONAL_SKILLS, result.getConversationalSkills());
         values.put(ResultEntry.COLUMN_LETTERS_NUMBERS, result.getLettersNumbers());
         values.put(ResultEntry.COLUMN_STUDENT_ID, result.getStudentID());
+        values.put(ResultEntry.COLUMN_ASSESSMENT_NO, result.getAssessmentNo());
 
 
         // insert row
@@ -291,26 +345,27 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public List<Result> getAllResults(long studentID)
-    {
+    public List<Result> getAllResults(long studentID) {
         List<Result> resultList = new ArrayList<>();
 
         dBase = this.getReadableDatabase();
 
-        Cursor cursor = dBase.query(ResultEntry.TABLE_NAME, null, "student_id=?",new String[] {String.valueOf(studentID)},null,null,null);
+        Cursor cursor = dBase.query(ResultEntry.TABLE_NAME, null, "student_id=?", new String[]{String.valueOf(studentID)}, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
 
                 Result result = new Result();
                 result.setId(cursor.getLong(0));
-                result.setVocalImitation(cursor.getInt(1));
-                result.setMatching(cursor.getInt(2));
-                result.setLabeling(cursor.getInt(3));
-                result.setReceptiveByFFC(cursor.getInt(4));
-                result.setConversationalSkills(cursor.getInt(5));
-                result.setLettersNumbers(cursor.getInt(6));
-                result.setStudentID(cursor.getLong(7));
+                result.setAssessmentDate(cursor.getString(1));
+                result.setVocalImitation(cursor.getInt(2));
+                result.setMatching(cursor.getInt(3));
+                result.setLabeling(cursor.getInt(4));
+                result.setReceptiveByFFC(cursor.getInt(5));
+                result.setConversationalSkills(cursor.getInt(6));
+                result.setLettersNumbers(cursor.getInt(7));
+                result.setAssessmentNo(cursor.getInt(8));
+                result.setStudentID(cursor.getLong(9));
 
                 resultList.add(result);
             } while (cursor.moveToNext());
@@ -319,24 +374,113 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         return resultList;
     }
 
-    public long updateResult(String score, int categoryNumber, long studentID)
-    {
+    public long updateResult(String score, int categoryNumber, long studentID, int dateFlag, int assessmentNo) {
         long rowCount = 0;
         dBase = this.getWritableDatabase();
 
-        Log.d("ccc",String.valueOf(score) + String.valueOf(categoryNumber) + String.valueOf(studentID));
+        Log.d("ccc", String.valueOf(score) + String.valueOf(categoryNumber) + String.valueOf(studentID));
+
+        ContentValues contentValues = new ContentValues();
+        Log.d("flag", "updateResult: " + dateFlag);
+
+        if (dateFlag == 0) {
+            String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+            Log.d("date", "updateResult: " + date);
+            contentValues.put(ResultEntry.COLUMN_ASSESSMENT_DATE, date);
+
+
+        }
+        if (categoryNumber == 2)
+            contentValues.put(ResultEntry.COLUMN_MATCHING_TO_SAMPLE, Integer.parseInt(score));
+        else if (categoryNumber == 3)
+            contentValues.put(ResultEntry.COLUMN_LABELING, Integer.parseInt(score));
+        else if (categoryNumber == 4)
+            contentValues.put(ResultEntry.COLUMN_RECEPTIVE_BY_FFC, Integer.parseInt(score));
+        else if (categoryNumber == 5)
+            contentValues.put(ResultEntry.COLUMN_CONVERSATIONAL_SKILLS, Integer.parseInt(score));
+        else if (categoryNumber ==6 )
+            contentValues.put(ResultEntry.COLUMN_LETTERS_NUMBERS, Integer.parseInt(score));
+
+        try {
+            rowCount = dBase.update(ResultEntry.TABLE_NAME, contentValues,
+                    ResultEntry.COLUMN_STUDENT_ID + " = ?  AND " + ResultEntry.COLUMN_ASSESSMENT_NO + " = ?",
+                    new String[]{String.valueOf(studentID), String.valueOf(assessmentNo)});
+        } catch (SQLiteException e) {
+//            Log.d("Exception: " + e.getMessage());
+//            Toast.makeText(, e.getMessage(), Toast.LENGTH_LONG).show();
+        } finally {
+            dBase.close();
+        }
+
+        return rowCount;
+    }
+
+    public long forceUpdateResult(long studentID, int assessmentNo) {
+        long rowCount = 0;
+        dBase = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
-        if (categoryNumber == 3)
-            contentValues.put(ResultEntry.COLUMN_LABELING,Integer.parseInt(score));
-        else if (categoryNumber == 5)
-            contentValues.put(ResultEntry.COLUMN_CONVERSATIONAL_SKILLS,Integer.parseInt(score));
+        contentValues.put(ResultEntry.COLUMN_VOCAL_IMITATION, Integer.parseInt("1"));
+        contentValues.put(ResultEntry.COLUMN_MATCHING_TO_SAMPLE, Integer.parseInt("2"));
+        contentValues.put(ResultEntry.COLUMN_LABELING, Integer.parseInt("3"));
+        contentValues.put(ResultEntry.COLUMN_RECEPTIVE_BY_FFC, Integer.parseInt("4"));
+        contentValues.put(ResultEntry.COLUMN_CONVERSATIONAL_SKILLS, Integer.parseInt("5"));
+        contentValues.put(ResultEntry.COLUMN_LETTERS_NUMBERS, Integer.parseInt("5"));
+
+
         try {
             rowCount = dBase.update(ResultEntry.TABLE_NAME, contentValues,
-                    ResultEntry.COLUMN_STUDENT_ID + " = ? ",
-                    new String[] {String.valueOf(studentID)});
-        } catch (SQLiteException e){
+                    ResultEntry.COLUMN_STUDENT_ID + " = ? AND " + ResultEntry.COLUMN_ASSESSMENT_NO + " = ?",
+                    new String[]{String.valueOf(studentID), String.valueOf(assessmentNo)});
+        } catch (SQLiteException e) {
+//            Log.d("Exception: " + e.getMessage());
+//            Toast.makeText(, e.getMessage(), Toast.LENGTH_LONG).show();
+        } finally {
+            dBase.close();
+        }
+
+        return rowCount;
+    }
+
+    public long forceInsertResult(long studentID) {
+        dBase = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ResultEntry.COLUMN_ASSESSMENT_DATE, "01/10/2018");
+        contentValues.put(ResultEntry.COLUMN_VOCAL_IMITATION, Integer.parseInt("1"));
+        contentValues.put(ResultEntry.COLUMN_MATCHING_TO_SAMPLE, Integer.parseInt("2"));
+        contentValues.put(ResultEntry.COLUMN_LABELING, Integer.parseInt("3"));
+        contentValues.put(ResultEntry.COLUMN_RECEPTIVE_BY_FFC, Integer.parseInt("4"));
+        contentValues.put(ResultEntry.COLUMN_CONVERSATIONAL_SKILLS, Integer.parseInt("5"));
+        contentValues.put(ResultEntry.COLUMN_LETTERS_NUMBERS, Integer.parseInt("5"));
+        contentValues.put(ResultEntry.COLUMN_STUDENT_ID, studentID);
+
+
+        // insert row
+        long id = dBase.insert(ResultEntry.TABLE_NAME, null, contentValues);
+
+        // close db connection
+        dBase.close();
+
+        // return newly inserted row id
+        return id;
+    }
+
+    public long forceUpdateDate(String date, long studentID, int assessmentNo) {
+        long rowCount = 0;
+        dBase = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ResultEntry.COLUMN_ASSESSMENT_DATE, date);
+
+        try {
+            rowCount = dBase.update(ResultEntry.TABLE_NAME, contentValues,
+                    ResultEntry.COLUMN_STUDENT_ID + " = ? AND " + ResultEntry.COLUMN_ASSESSMENT_NO + " = ?",
+                    new String[]{String.valueOf(studentID), String.valueOf(assessmentNo)});
+        } catch (SQLiteException e) {
 //            Log.d("Exception: " + e.getMessage());
 //            Toast.makeText(, e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {

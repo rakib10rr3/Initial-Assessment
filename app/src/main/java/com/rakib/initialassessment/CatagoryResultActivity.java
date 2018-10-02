@@ -29,14 +29,22 @@ public class CatagoryResultActivity extends AppCompatActivity {
         scoreTextView = findViewById(R.id.txtChildScore);
         finishButton = findViewById(R.id.btnFinish);
 
-        final String score = String.valueOf(getIntent().getIntExtra("score",0));
+        final String score = String.valueOf(getIntent().getIntExtra("score", 0));
         final String categoryName = getIntent().getStringExtra("category");
-        final Long id = getIntent().getLongExtra("id",-1);
+        final Long id = getIntent().getLongExtra("id", -1);
+        final int flag = getIntent().getIntExtra("date_flag", -1);
+        final int assessmentNo = getIntent().getIntExtra("assessment_no",-1);
 
-        if (categoryName.equals("Labeling"))
+        if (categoryName.equals("Matching"))
+            number = 2;
+        else if (categoryName.equals("Labeling"))
             number = 3;
+        else if (categoryName.equals("Receptive by FFC"))
+            number = 4;
         else if (categoryName.equals("Conversational Skills"))
             number = 5;
+        else
+            number = 6;
 
         categoryTextView.setText(categoryName);
         scoreTextView.setText(score + " out of 5");
@@ -46,7 +54,7 @@ public class CatagoryResultActivity extends AppCompatActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.updateResult(score, number, id);
+                db.updateResult(score, number, id, flag,assessmentNo);
 
                 finish();
             }

@@ -32,6 +32,7 @@ public class InitialAssessmentContract {
 
     public static class ResultEntry implements BaseColumns{
         public static final String TABLE_NAME="result";
+        public static final String COLUMN_ASSESSMENT_DATE = "assessment_date";
         public static final String COLUMN_VOCAL_IMITATION="vocal_imitation";
         public static final String COLUMN_MATCHING_TO_SAMPLE="matching";
         public static final String COLUMN_LABELING="labeling";
@@ -39,6 +40,7 @@ public class InitialAssessmentContract {
         public static final String COLUMN_CONVERSATIONAL_SKILLS="conversational";
         public static final String COLUMN_LETTERS_NUMBERS="letters_numbers";
         public static final String COLUMN_STUDENT_ID="student_id";
+        public static final String COLUMN_ASSESSMENT_NO = "assessment_no";
     }
 
 }

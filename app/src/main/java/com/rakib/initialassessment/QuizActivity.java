@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -35,8 +36,11 @@ public class QuizActivity extends AppCompatActivity {
 
     Intent intent;
     String hasImage;
+    String category;
 
     Long id;
+    int flag;
+    int assessmentNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +49,21 @@ public class QuizActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /**
-         * TODO: appbar title should be the assessment name
-         */
 
-        id = getIntent().getLongExtra("id",-1);
+        id = getIntent().getLongExtra("id", -1);
+        flag = getIntent().getIntExtra("date_flag", -1);
+        assessmentNo = getIntent().getIntExtra("assessment_no", -1);
+        category = getIntent().getStringExtra("cat");
+
+        getSupportActionBar().setTitle(category);
+
+        if (category.equals("Matching"))
+            getSupportActionBar().setTitle("Matching to Sample");
+        if (category.equals("Receptive by FFC"))
+            getSupportActionBar().setTitle("Receptive by Function, Feature & Class");
 
         InitialAssessmentDbHelper dbHelper = new InitialAssessmentDbHelper(this);
-        questionList = dbHelper.getAllQuestions(getIntent().getStringExtra("cat"));
+        questionList = dbHelper.getAllQuestions(category);
         currentQ = questionList.get(qid);
 
 
@@ -65,9 +76,9 @@ public class QuizActivity extends AppCompatActivity {
 
         hasImage = getIntent().getStringExtra("has_image");
         if (hasImage.equals("yes"))
-            setQuestionView(0);
+            setQuestionView(0, category);
         else
-            setQuestionView(1);
+            setQuestionView(1, category);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +87,7 @@ public class QuizActivity extends AppCompatActivity {
 
                 if (radioGroup.getCheckedRadioButtonId() != -1) {
                     RadioButton answer = findViewById(radioGroup.getCheckedRadioButtonId());
+
 
                     radioGroup.clearCheck();
                     if (currentQ.getCorrect().equals(answer.getText())) {
@@ -108,14 +120,16 @@ public class QuizActivity extends AppCompatActivity {
                     if (qid < 5) {
                         currentQ = questionList.get(qid);
                         if (hasImage.equals("yes"))
-                            setQuestionView(0);
+                            setQuestionView(0, category);
                         else
-                            setQuestionView(1);
+                            setQuestionView(1, category);
                     } else {
                         intent = new Intent(getApplicationContext(), CatagoryResultActivity.class);
-                        intent.putExtra("id",id);
+                        intent.putExtra("id", id);
                         intent.putExtra("category", currentQ.getCategory());
                         intent.putExtra("score", score);
+                        intent.putExtra("date_flag", flag);
+                        intent.putExtra("assessment_no", assessmentNo);
                         startActivity(intent);
                         finish();
                     }
@@ -138,11 +152,17 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    private void setQuestionView(int i) {
+    private void setQuestionView(int i, String category) {
 
         if (i == 0) {
 
-            questionTextView.setText("identify this : ");
+            if (category.equals("Matching"))
+                questionTextView.setText("Match with this : ");
+            else if (category.equals("Labeling"))
+                questionTextView.setText("Identify this : ");
+            else if (category.equals("Letters and Numbers"))
+                questionTextView.setText("What is this? ");
+
 
             Resources res = getResources();
             String mDrawableName = currentQ.getQuestion();
@@ -155,9 +175,42 @@ public class QuizActivity extends AppCompatActivity {
             questionTextView.setText(currentQ.getQuestion());
         }
 
-        optARadioButton.setText(currentQ.getOptionA());
-        optBRadioButton.setText(currentQ.getOptionB());
-        optCRadioButton.setText(currentQ.getOptionC());
+
+        if (category.equals("Matching")) {
+
+
+            Resources res = getResources();
+
+            String mDrawableName1 = currentQ.getOptionA();
+            int resID1 = res.getIdentifier(mDrawableName1, "drawable", getPackageName());
+
+            String mDrawableName2 = currentQ.getOptionB();
+            int resID2 = res.getIdentifier(mDrawableName2, "drawable", getPackageName());
+
+            String mDrawableName3 = currentQ.getOptionC();
+            int resID3 = res.getIdentifier(mDrawableName3, "drawable", getPackageName());
+
+            //questionImageView.setImageResource(resID);
+
+            optARadioButton.setText(currentQ.getOptionA());
+            optBRadioButton.setText(currentQ.getOptionB());
+            optCRadioButton.setText(currentQ.getOptionC());
+
+            optARadioButton.setTextColor(Color.TRANSPARENT);
+            optBRadioButton.setTextColor(Color.TRANSPARENT);
+            optCRadioButton.setTextColor(Color.TRANSPARENT);
+
+            optARadioButton.setCompoundDrawablesWithIntrinsicBounds(resID1, 0, 0, 0);
+            optBRadioButton.setCompoundDrawablesWithIntrinsicBounds(resID2, 0, 0, 0);
+            optCRadioButton.setCompoundDrawablesWithIntrinsicBounds(resID3, 0, 0, 0);
+
+
+        } else {
+            optARadioButton.setText(currentQ.getOptionA());
+            optBRadioButton.setText(currentQ.getOptionB());
+            optCRadioButton.setText(currentQ.getOptionC());
+        }
+
         qid++;
     }
 

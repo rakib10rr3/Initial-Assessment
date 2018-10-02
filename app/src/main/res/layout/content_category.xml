@@ -41,7 +41,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
                         android:padding="@dimen/dimen_10"
-                        android:src="@drawable/ic_accessibility_black_24dp" />
+                        android:src="@drawable/ic_protest" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
                         android:padding="@dimen/dimen_10"
-                        android:src="@drawable/ic_accessibility_black_24dp" />
+                        android:src="@drawable/ic_puzzle" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -143,7 +143,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
                         android:padding="@dimen/dimen_10"
-                        android:src="@drawable/ic_accessibility_black_24dp" />
+                        android:src="@drawable/ic_sign" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -189,7 +189,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
                         android:padding="@dimen/dimen_10"
-                        android:src="@drawable/ic_accessibility_black_24dp" />
+                        android:src="@drawable/ic_question" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -245,7 +245,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
                         android:padding="@dimen/dimen_10"
-                        android:src="@drawable/ic_accessibility_black_24dp" />
+                        android:src="@drawable/ic_conversation" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -291,7 +291,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
                         android:padding="@dimen/dimen_10"
-                        android:src="@drawable/ic_accessibility_black_24dp" />
+                        android:src="@drawable/ic_communications" />
 
                     <TextView
                         android:layout_width="wrap_content"

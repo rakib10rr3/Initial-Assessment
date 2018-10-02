@@ -2,6 +2,7 @@ package com.rakib.initialassessment.model;
 
 public class Result {
     private long id;
+    private String assessmentDate;
     private int vocalImitation;
     private int matching;
     private int labeling;
@@ -9,12 +10,14 @@ public class Result {
     private int conversationalSkills;
     private int lettersNumbers;
     private long studentID;
+    private int assessmentNo;
 
     public Result(){}
 
-    public Result(long id, int vocalImitation, int matching, int labeling, int receptiveByFFC, int conversationalSkills, int lettersNumbers, long studentID)
+    public Result(long id, String assessmentDate, int vocalImitation, int matching, int labeling, int receptiveByFFC, int conversationalSkills, int lettersNumbers, long studentID, int assessmentNo)
     {
         this.id = id;
+        this.assessmentDate = assessmentDate;
         this.vocalImitation = vocalImitation;
         this.matching = matching;
         this.labeling = labeling;
@@ -22,10 +25,15 @@ public class Result {
         this.conversationalSkills = conversationalSkills;
         this.lettersNumbers = lettersNumbers;
         this.studentID = studentID;
+        this.assessmentNo = assessmentNo;
     }
 
     public long getId() {
         return id;
+    }
+
+    public String getAssessmentDate() {
+        return assessmentDate;
     }
 
     public int getVocalImitation() {
@@ -56,8 +64,16 @@ public class Result {
         return studentID;
     }
 
+    public int getAssessmentNo() {
+        return assessmentNo;
+    }
+
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setAssessmentDate(String assessmentDate) {
+        this.assessmentDate = assessmentDate;
     }
 
     public void setVocalImitation(int vocalImitation) {
@@ -86,5 +102,9 @@ public class Result {
 
     public void setStudentID(long studentID) {
         this.studentID = studentID;
+    }
+
+    public void setAssessmentNo(int assessmentNo) {
+        this.assessmentNo = assessmentNo;
     }
 }

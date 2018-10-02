@@ -69,6 +69,10 @@ public class MainActivity extends AppCompatActivity
 
         db = new InitialAssessmentDbHelper(this);
 
+        //db.forceUpdateResult(1,2);
+        //db.forceInsertResult(2);
+        //db.forceUpdateDate("20/09/2018",1,2);
+
         studentList.addAll(db.getAllStudents());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -310,7 +314,7 @@ public class MainActivity extends AppCompatActivity
 //                    Log.d("aaa", dob);
 
                     long id = db.insertStudent(new Student(-1,name,dob,gender));
-                    long resultId = db.insertResult(new Result(-1,-1,-1,-1,-1,-1,-1,id));
+                    long resultId = db.insertResult(new Result(-1,"null",-1,-1,-1,-1,-1,-1,id,1));
                     Log.d("student_id",String.valueOf(id));
                     Log.d("result_id",String.valueOf(resultId));
                     studentList.clear();

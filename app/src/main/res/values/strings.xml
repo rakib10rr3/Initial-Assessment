@@ -16,4 +16,7 @@
     <string name="title_activity_category">CategoryActivity</string>
     <string name="title_activity_category_result">CategoryResultActivity</string>
     <string name="title_activity_quiz">Quiz</string>
+    <string name="title_activity_table">TableActivity</string>
+    <string name="score_as_table">Score as table</string>
+    <string name="reset_score">Reset Score</string>
 </resources>

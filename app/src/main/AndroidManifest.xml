@@ -43,6 +43,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rakib.initialassessment.MainActivity" />
         </activity>
+        <activity
+            android:name=".TableActivity"
+            android:label="@string/title_activity_table"
+            android:parentActivityName=".CategoryActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rakib.initialassessment.CategoryActivity" />
+        </activity>
     </application>
 
 </manifest>
