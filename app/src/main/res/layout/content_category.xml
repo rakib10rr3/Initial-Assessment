@@ -34,19 +34,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="4dp">
 
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
-                        android:padding="@dimen/dimen_10"
+                        android:padding="@dimen/dimen_14"
                         android:src="@drawable/ic_protest" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
+                        android:gravity="center"
                         android:text="Vocal Imitation"
                         android:textStyle="bold" />
 
@@ -80,19 +82,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="4dp">
 
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
-                        android:padding="@dimen/dimen_10"
+                        android:padding="@dimen/dimen_14"
                         android:src="@drawable/ic_puzzle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
+                        android:gravity="center"
                         android:text="Matching to Sample"
                         android:textStyle="bold" />
 
@@ -136,19 +140,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="4dp">
 
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
-                        android:padding="@dimen/dimen_10"
+                        android:padding="@dimen/dimen_14"
                         android:src="@drawable/ic_sign" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
+                        android:gravity="center"
                         android:text="Labeling"
                         android:textStyle="bold" />
 
@@ -182,13 +188,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="4dp">
 
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
-                        android:padding="@dimen/dimen_10"
+                        android:gravity="center"
+                        android:padding="@dimen/dimen_14"
                         android:src="@drawable/ic_question" />
 
                     <TextView
@@ -238,19 +246,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="4dp">
 
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
-                        android:padding="@dimen/dimen_10"
+                        android:padding="@dimen/dimen_14"
                         android:src="@drawable/ic_conversation" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
+                        android:gravity="center"
                         android:text="Conversational Skills"
                         android:textStyle="bold" />
 
@@ -284,19 +294,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="4dp">
 
                     <ImageView
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:background="@drawable/circlebackground"
-                        android:padding="@dimen/dimen_10"
+                        android:padding="@dimen/dimen_14"
                         android:src="@drawable/ic_communications" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
+                        android:gravity="center"
                         android:text="Letters and Numbers"
                         android:textStyle="bold" />
 

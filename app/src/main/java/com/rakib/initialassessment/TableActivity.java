@@ -44,10 +44,8 @@ public class TableActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         id = getIntent().getLongExtra("id",-1);
         name = getIntent().getStringExtra("name");
-
 
         getSupportActionBar().setTitle("Scores of " + name);
 

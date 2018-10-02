@@ -45,8 +45,10 @@
         </activity>
         <activity
             android:name=".TableActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_table"
             android:parentActivityName=".CategoryActivity"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
