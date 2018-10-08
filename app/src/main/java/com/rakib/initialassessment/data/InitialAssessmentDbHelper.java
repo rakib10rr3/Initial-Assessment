@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 22;
+    private static final int DATABASE_VERSION = 23;
     private static final String DATABASE_NAME = "initial_assessment.db";
 
     private SQLiteDatabase dBase;
@@ -68,9 +68,9 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
                 ResultEntry.COLUMN_STUDENT_ID + " INTEGER, " +
                 "FOREIGN KEY (" + ResultEntry.COLUMN_STUDENT_ID + ") REFERENCES " + StudentEntry.TABLE_NAME + "(" + StudentEntry._ID + ") ON UPDATE CASCADE ON DELETE CASCADE )";
 
-        db.execSQL(CREATE_STUDENT_TABLE);
+        //db.execSQL(CREATE_STUDENT_TABLE);
         db.execSQL(CREATE_QUESTION_TABLE);
-        db.execSQL(CREATE_RESULT_TABLE);
+        //db.execSQL(CREATE_RESULT_TABLE);
 
         addConversationalSkillsQuestions();
         addLabelingQuestions();
@@ -81,9 +81,9 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + StudentEntry.TABLE_NAME);
+        //db.execSQL("DROP TABLE IF EXISTS " + StudentEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + QuestionEntry.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + ResultEntry.TABLE_NAME);
+        //db.execSQL("DROP TABLE IF EXISTS " + ResultEntry.TABLE_NAME);
 
 
         // Create tables again
@@ -260,12 +260,26 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
         Question q3 = new Question(-1, "Students go here for study. The teacher teaches the students here. What is the place?", "Park", "School", "Office", "school", "Receptive by FFC");
         Question q4 = new Question(-1, "It is a place where we lie down to sleep or rest. We all have it in our room. What is it? ", "Bed", "Pizza", "Road", "Bed", "Receptive by FFC");
         Question q5 = new Question(-1, "It is a place for praying. Muslim people go here for praying their daily prayer. It a place for worship to Allah for Muslims. What is it? ", "School", "Mosque", "Stadium", "Mosque", "Receptive by FFC");
+        Question q6 = new Question(-1, "It is a place where we live with our parents. What is it? ", "home", "restaurant", "bridge", "home", "Receptive by FFC");
+        Question q7 = new Question(-1, "We see cartoons and different shows with our parents in it. What is it?", "cat", "television", "fan", "television", "Receptive by FFC");
+        Question q8 = new Question(-1, "It is a place from where we travel from one place to another by bus. What is the place?", "bus station", "field", "river", "bus station", "Receptive by FFC"
+        );
+        Question q9 = new Question(-1, "We sit on it when we study or eat food. What is it?", "light", "chair", "mango", "chair", "Receptive by FFC");
+        Question q10 = new Question(-1, "It is a part of our body. We can see everything around us by it. What is it?", "leg", "eye", "water", "eye", "Receptive by FFC");
+        Question q11= new Question(-1, "It is a place from where we travel from one place to another by train. What is the place?", "train station", "field", "river", "train station", "Receptive by FFC");
+
 
         this.addQuestion(q1);
         this.addQuestion(q2);
         this.addQuestion(q3);
         this.addQuestion(q4);
         this.addQuestion(q5);
+        this.addQuestion(q6);
+        this.addQuestion(q7);
+        this.addQuestion(q8);
+        this.addQuestion(q9);
+        this.addQuestion(q10);
+        this.addQuestion(q11);
 
     }
 
@@ -390,7 +404,9 @@ public class InitialAssessmentDbHelper extends SQLiteOpenHelper {
 
 
         }
-        if (categoryNumber == 2)
+        if (categoryNumber == 1)
+            contentValues.put(ResultEntry.COLUMN_VOCAL_IMITATION, Integer.parseInt(score));
+        else if (categoryNumber == 2)
             contentValues.put(ResultEntry.COLUMN_MATCHING_TO_SAMPLE, Integer.parseInt(score));
         else if (categoryNumber == 3)
             contentValues.put(ResultEntry.COLUMN_LABELING, Integer.parseInt(score));

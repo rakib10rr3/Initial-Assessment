@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.rakib.initialassessment">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -54,6 +56,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rakib.initialassessment.CategoryActivity" />
         </activity>
+        <activity android:name=".VocalImitationActivity"></activity>
     </application>
 
 </manifest>

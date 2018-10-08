@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity
 
         db = new InitialAssessmentDbHelper(this);
 
-        //db.forceUpdateResult(1,2);
+        //db.forceUpdateResult(2,2);
         //db.forceInsertResult(2);
-        //db.forceUpdateDate("20/09/2018",1,2);
+        db.forceUpdateDate("01/10/2018",4,1);
 
         studentList.addAll(db.getAllStudents());
 

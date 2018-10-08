@@ -105,7 +105,7 @@ public class QuizActivity extends AppCompatActivity {
 
                         toast.show();
                     } else {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Wrong! Correct answer is " + currentQ.getCorrect(), Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getApplicationContext(), "Wrong!", Toast.LENGTH_SHORT);
                         View v = toast.getView();
 
 //Gets the actual oval background of the Toast then sets the colour filter
@@ -117,7 +117,7 @@ public class QuizActivity extends AppCompatActivity {
 
                         toast.show();
                     }
-                    if (qid < 5) {
+                    if (qid < questionList.size()) {
                         currentQ = questionList.get(qid);
                         if (hasImage.equals("yes"))
                             setQuestionView(0, category);
@@ -169,7 +169,7 @@ public class QuizActivity extends AppCompatActivity {
             int resID = res.getIdentifier(mDrawableName, "drawable", getPackageName());
             questionImageView.setImageResource(resID);
 
-            questionImageView.getLayoutParams().height = 900;
+            questionImageView.getLayoutParams().height = 300;
             questionImageView.requestLayout();
         } else {
             questionTextView.setText(currentQ.getQuestion());

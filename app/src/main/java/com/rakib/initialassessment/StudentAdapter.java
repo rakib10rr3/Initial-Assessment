@@ -104,6 +104,17 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                 (a.get(MONTH) == b.get(MONTH) && a.get(DATE) > b.get(DATE))) {
             diff--;
         }
+
+        if (diff == 0)
+        {
+           diff = b.get(MONTH) - a.get(MONTH);
+            if (a.get(MONTH) > b.get(MONTH) ||
+                    (a.get(MONTH) == b.get(MONTH) && a.get(DATE) > b.get(DATE))) {
+                diff--;
+            }
+
+        }
+
         return diff;
     }
 

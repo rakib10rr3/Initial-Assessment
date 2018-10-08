@@ -33,9 +33,11 @@ public class CatagoryResultActivity extends AppCompatActivity {
         final String categoryName = getIntent().getStringExtra("category");
         final Long id = getIntent().getLongExtra("id", -1);
         final int flag = getIntent().getIntExtra("date_flag", -1);
-        final int assessmentNo = getIntent().getIntExtra("assessment_no",-1);
+        final int assessmentNo = getIntent().getIntExtra("assessment_no", -1);
 
-        if (categoryName.equals("Matching"))
+        if (categoryName.equals("Vocal Imitation"))
+            number = 1;
+        else if (categoryName.equals("Matching"))
             number = 2;
         else if (categoryName.equals("Labeling"))
             number = 3;
@@ -54,7 +56,7 @@ public class CatagoryResultActivity extends AppCompatActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.updateResult(score, number, id, flag,assessmentNo);
+                db.updateResult(score, number, id, flag, assessmentNo);
 
                 finish();
             }
